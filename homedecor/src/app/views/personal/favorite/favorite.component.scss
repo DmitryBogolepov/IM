@@ -27,55 +27,7 @@
     }
 
     .favorite-products {
-      .favorite-product {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-top: 15px;
-        margin-top: 15px;
-        border-top: 1px solid #E7F1E8;
 
-        &:first-child {
-          border-top: 0;
-          margin-top: 0;
-          padding-top: 0;
-        }
-
-        .favorite-product-image {
-          background-position: center;
-          background-size: cover;
-          width: 100px;
-          height: 100px;
-          border-radius: 5px;
-        }
-
-        .favorite-product-name {
-          margin-left: 24px;
-          font-size: 20px;
-          line-height: 130%;
-          color: $gray-text-color;
-          width: 567px;
-          margin-right: 20px;
-        }
-
-        .favorite-product-price {
-          font-family: Montserrat, sans-serif;
-          font-weight: 600;
-          font-size: 22px;
-          width: 100px;
-          margin-right: 193px;
-          color: $gray-text-color;
-        }
-
-        .favorite-product-action button {
-          width: 160px;
-        }
-
-        .favorite-product-remove {
-          margin-left: 60px;
-          cursor: pointer;
-        }
-      }
     }
   }
 }

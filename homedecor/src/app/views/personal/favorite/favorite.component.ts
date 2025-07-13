@@ -15,6 +15,7 @@ export class FavoriteComponent implements OnInit {
   products:FavoriteType[] =[];
   serverStaticPath = environment.serverStaticPath;
   count:number = 1;
+  cart: CartType | null = null;
   @Input() countInCart:number | undefined = 0;
 
   constructor(private favoriteService:FavoriteService,private cartService:CartService) { }
@@ -27,29 +28,15 @@ export class FavoriteComponent implements OnInit {
           throw new Error(error);
         }
         this.products = data as FavoriteType[];
-      })
+      });
+
+
+    this.cartService.getCart().subscribe((data: CartType | DefaultResponseType) => {
+      if ((data as DefaultResponseType).error !== undefined) {
+        throw new Error((data as DefaultResponseType).message)
+      }
+      this.cart = data as CartType;
+    });
   }
-
-  removeFromFavorites(id:string) {
-    this.favoriteService.removeFavorite(id)
-      .subscribe((data:DefaultResponseType) => {
-        if(data.error) {
-          throw new Error(data.message);
-        }
-
-        this.products = this.products.filter(item => item.id !== id);
-      })
-  }
-
-  // addToCart() {
-  //
-  //   this.cartService.updateCart(this.products.id, this.count)
-  //     .subscribe((data:CartType | DefaultResponseType)=> {
-  //       if ((data as DefaultResponseType).error !== undefined) {
-  //         throw new Error((data as DefaultResponseType).message)
-  //       }
-  //       this.countInCart = this.count;
-  //     });
-  // }
 
 }
