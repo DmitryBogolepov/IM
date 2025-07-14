@@ -22,4 +22,6 @@ export class FavoriteService {
   addFavorite(productId:string):Observable<FavoriteType | DefaultResponseType> {
     return this.http.post<FavoriteType | DefaultResponseType>(environment.api + 'favorites',{productId});
   }
+
+
 }

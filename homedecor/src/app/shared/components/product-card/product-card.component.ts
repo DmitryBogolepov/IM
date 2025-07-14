@@ -32,7 +32,6 @@ export class ProductCardComponent implements OnInit {
     }
   }
 
-
   addToCart() {
     this.cartService.updateCart(this.product.id, this.count)
       .subscribe((data:CartType | DefaultResponseType)=> {
@@ -79,7 +78,6 @@ export class ProductCardComponent implements OnInit {
           if(data.error) {
             throw new Error(data.message);
           }
-
           this.product.isInFavorite = false;
         })
     } else {

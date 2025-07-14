@@ -120,7 +120,6 @@ export class CatalogComponent implements OnInit {
                 for (let i = 1; i <= data.pages; i++) {
                   this.pages.push(i);
                 }
-
                 if (this.cart && this.cart.items.length > 0) {
                   this.products = data.items.map(product => {
                     if (this.cart) {
@@ -143,9 +142,6 @@ export class CatalogComponent implements OnInit {
                     return product;
                   })
                 }
-
-
-
               });
           });
       })
