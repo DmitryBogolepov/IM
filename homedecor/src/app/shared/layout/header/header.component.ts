@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   serverStaticPath = environment.serverStaticPath;
   count:number = 0;
   products:ProductType[] = [];
-  constructor(private loaderService:LoaderService,private productService:ProductService,private authService:AuthService,private _snackBar: MatSnackBar,private router:Router,private cartService:CartService) {
+  constructor(private productService:ProductService,private authService:AuthService,private _snackBar: MatSnackBar,private router:Router,private cartService:CartService) {
     this.isLogged = this.authService.getIsLoggedIn();
   }
 
@@ -47,20 +47,24 @@ export class HeaderComponent implements OnInit {
             }
       });
 
-    this.authService.isLogged$.subscribe((isLogged:boolean)=> {
+    this.authService.isLogged$.subscribe((isLogged: boolean) => {
       this.isLogged = isLogged;
-    })
+
+      if (isLogged) {
+        this.cartService.getCartCount().subscribe();
+      } else {
+        this.cartService.clearCart();
+      }
+    });
+    this.cartService.count$.subscribe(count => {
+      this.count = count;
+    });
 
     this.cartService.getCartCount().subscribe((data:{ count: number } | DefaultResponseType) => {
       if ((data as DefaultResponseType).error !== undefined) {
         throw new Error((data as DefaultResponseType).message)
       }
       this.count = (data as {count:number}).count;
-
-    })
-
-    this.cartService.count$.subscribe(count => {
-      this.count = count;
     })
   }
 
@@ -80,12 +84,6 @@ export class HeaderComponent implements OnInit {
     this._snackBar.open('Вы вышли из системы');
     this.router.navigate(['/'])
   }
-  //
-  // changedSearchValue(newValue:string) {
-  //   this.searchValue= newValue;
-  //
-  //
-  // }
 
   selectProduct(url:string) {
     this.router.navigate(['/product/' +url]);

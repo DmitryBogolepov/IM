@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject, tap} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {CartType} from "../../../types/cart.type";
@@ -10,47 +10,92 @@ import {DefaultResponseType} from "../../../types/default-response.type";
 })
 export class CartService {
 
-  private count: number = 0;
-  count$: Subject<number> = new Subject<number>();
+  // private count: number = 0;
+  // count$: Subject<number> = new Subject<number>();
+  //
+  // constructor(private http: HttpClient) {
+  // }
+  //
+  //
+  // getCart(): Observable<CartType | DefaultResponseType> {
+  //   return this.http.get<CartType | DefaultResponseType>(environment.api + "cart", {withCredentials: true});
+  // }
+  //
+  // setCount(count: number) {
+  //   this.count = count;
+  //   this.count$.next(this.count);
+  // }
+  //
+  // getCartCount(): Observable<{
+  //   count: number
+  // } | DefaultResponseType> {
+  //   return this.http.get<{
+  //     count: number
+  //   } | DefaultResponseType>(environment.api + "cart/count", {withCredentials: true})
+  //     .pipe(tap(data => {
+  //       if (!data.hasOwnProperty('error')) {
+  //         this.setCount((data as { count: number }).count)
+  //       }
+  //     }));
+  // }
+  //
+  // updateCart(productId: string, quantity: number): Observable<CartType | DefaultResponseType> {
+  //   return this.http.post<CartType | DefaultResponseType>(environment.api + "cart", {
+  //     productId, quantity
+  //   }, {withCredentials: true})
+  //     .pipe(tap(data => {
+  //       if (!data.hasOwnProperty('error')) {
+  //         let count = 0;
+  //         (data as CartType).items.forEach(item => {
+  //           count += item.quantity;
+  //         });
+  //         this.setCount(count)
+  //       }
+  //     }));
+  // }
 
-  constructor(private http: HttpClient) {
-  }
+  private countSubject = new BehaviorSubject<number>(0);
+  count$ = this.countSubject.asObservable();
 
+  constructor(private http: HttpClient) {}
 
   getCart(): Observable<CartType | DefaultResponseType> {
     return this.http.get<CartType | DefaultResponseType>(environment.api + "cart", {withCredentials: true});
   }
 
-  setCount(count: number) {
-    this.count = count;
-    this.count$.next(this.count);
+  setCount(count: number): void {
+    this.countSubject.next(count);
   }
 
-  getCartCount(): Observable<{
-    count: number
-  } | DefaultResponseType> {
-    return this.http.get<{
-      count: number
-    } | DefaultResponseType>(environment.api + "cart/count", {withCredentials: true})
-      .pipe(tap(data => {
-        if (!data.hasOwnProperty('error')) {
-          this.setCount((data as { count: number }).count)
-        }
-      }));
+  clearCart(): void {
+    this.countSubject.next(0);
+  }
+
+  getCartCount(): Observable<{ count: number } | DefaultResponseType> {
+    return this.http.get<{ count: number } | DefaultResponseType>(environment.api + "cart/count", {withCredentials: true})
+      .pipe(
+        tap(data => {
+          if (!('error' in data)) {
+            this.setCount((data as { count: number }).count);
+          }
+        })
+      );
   }
 
   updateCart(productId: string, quantity: number): Observable<CartType | DefaultResponseType> {
     return this.http.post<CartType | DefaultResponseType>(environment.api + "cart", {
       productId, quantity
     }, {withCredentials: true})
-      .pipe(tap(data => {
-        if (!data.hasOwnProperty('error')) {
-          let count = 0;
-          (data as CartType).items.forEach(item => {
-            count += item.quantity;
-          });
-          this.setCount(count)
-        }
-      }));
+      .pipe(
+        tap(data => {
+          if (!('error' in data)) {
+            let count = 0;
+            (data as CartType).items.forEach(item => {
+              count += item.quantity;
+            });
+            this.setCount(count);
+          }
+        })
+      );
   }
 }

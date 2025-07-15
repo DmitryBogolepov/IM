@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ProductService} from "../../../shared/services/product.service";
 import {ProductType} from "../../../../types/product.type";
 import {CategoryService} from "../../../shared/services/category.service";
@@ -33,6 +33,7 @@ export class CatalogComponent implements OnInit {
     {name: 'По убыванию цены', value: 'price-desc'},
   ];
   pages: number[] = [];
+  showedSearch:boolean = false;
   cart: CartType | null = null;
   favoriteProducts: FavoriteType[] | null = null;
 
@@ -162,11 +163,16 @@ export class CatalogComponent implements OnInit {
   }
 
   openNextPage() {
-    if (this.activeParams.page && this.activeParams.page < this.pages.length) {
+    if (!this.activeParams.page) {
+      this.activeParams.page = 2;
+      this.router.navigate(['/catalog'], {
+        queryParams: this.activeParams
+      });
+    } else if (this.activeParams.page && this.activeParams.page < this.pages.length) {
       this.activeParams.page++;
       this.router.navigate(['/catalog'], {
         queryParams: this.activeParams
-      })
+      });
     }
   }
 
@@ -175,7 +181,7 @@ export class CatalogComponent implements OnInit {
       this.activeParams.page--;
       this.router.navigate(['/catalog'], {
         queryParams: this.activeParams
-      })
+      });
     }
   }
 
@@ -193,5 +199,16 @@ export class CatalogComponent implements OnInit {
     this.router.navigate(['/catalog'], {
       queryParams: this.activeParams
     })
+  }
+
+  @HostListener('document:click', ['$event'])
+  click(event: Event) {
+    const target = event.target as HTMLElement;
+    if (this.showedSearch && !target.closest('.search-product')) {
+      this.showedSearch = false;
+    }
+    if (this.sortingOpen && !target.closest('.catalog-sorting')) {
+      this.sortingOpen = false;
+    }
   }
 }
