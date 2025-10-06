@@ -10,7 +10,6 @@ import {ProductType} from "../../../../types/product.type";
 import {environment} from "../../../../environments/environment";
 import {FormControl} from "@angular/forms";
 import {debounceTime} from "rxjs";
-import {LoaderService} from "../../services/loader.service";
 
 @Component({
   selector: 'app-header',
@@ -21,10 +20,10 @@ export class HeaderComponent implements OnInit {
   @Input() categories:CategoryWithType[] = [];
 
   searchField = new FormControl();
-  isLogged:boolean = false;
-  showedSearch:boolean = false;
+  isLogged = false;
+  showedSearch = false;
   serverStaticPath = environment.serverStaticPath;
-  count:number = 0;
+  count = 0;
   products:ProductType[] = [];
   constructor(private productService:ProductService,private authService:AuthService,private _snackBar: MatSnackBar,private router:Router,private cartService:CartService) {
     this.isLogged = this.authService.getIsLoggedIn();

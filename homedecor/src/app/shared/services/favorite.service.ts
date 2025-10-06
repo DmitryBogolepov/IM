@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ProductType} from "../../../types/product.type";
 import {environment} from "../../../environments/environment";
 import {FavoriteType} from "../../../types/favorite.type";
 import {Observable} from "rxjs";

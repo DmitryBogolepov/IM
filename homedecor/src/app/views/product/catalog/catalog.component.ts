@@ -33,7 +33,7 @@ export class CatalogComponent implements OnInit {
     {name: 'По убыванию цены', value: 'price-desc'},
   ];
   pages: number[] = [];
-  showedSearch:boolean = false;
+  showedSearch = false;
   cart: CartType | null = null;
   favoriteProducts: FavoriteType[] | null = null;
 

@@ -1,4 +1,4 @@
-export type CategoryWithType = {
+export interface CategoryWithType {
   id:string,
   name:string,
   url:string,

@@ -15,7 +15,7 @@ export class FavoriteCardComponent implements OnInit {
   @Input() product!:FavoriteType;
   @Input() countInCart:number | undefined = 0;
   @Output() onRemove: EventEmitter<string> = new EventEmitter<string>();
-  count:number = 1;
+  count = 1;
 
   serverStaticPath = environment.serverStaticPath;
   constructor(private cartService:CartService,private favoriteService:FavoriteService) { }

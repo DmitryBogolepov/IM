@@ -22,7 +22,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class DetailComponent implements OnInit {
   recommendedProducts:ProductType[] = [];
   product!:ProductType;
-  count:number = 1;
+  count = 1;
   serverStaticPath = environment.serverStaticPath;
   customOptions: OwlOptions = {
     loop: true,

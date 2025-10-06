@@ -17,11 +17,11 @@ import {Router} from "@angular/router";
 })
 export class ProductCardComponent implements OnInit {
   @Input() product!:ProductType;
-  @Input() isLight:boolean = false;
+  @Input() isLight = false;
   @Input() countInCart:number | undefined = 0;
-  isLogged:boolean = false;
+  isLogged = false;
   serverStaticPath = environment.serverStaticPath;
-  count:number = 1;
+  count = 1;
   constructor(private router:Router,private cartService:CartService, private _snackBar:MatSnackBar,private authService:AuthService,private favoriteService:FavoriteService) {
     this.isLogged = this.authService.getIsLoggedIn();
   }

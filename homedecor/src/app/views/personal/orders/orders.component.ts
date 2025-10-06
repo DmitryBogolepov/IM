@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OrderService} from "../../../shared/services/order.service";
 import {OrderType} from "../../../../types/order.type";
 import {DefaultResponseType} from "../../../../types/default-response.type";
-import {OrdersStatusUtil} from "../../../shared/utils/orders-status";
+import {OrdersStatusUtil} from "../../../shared/utils/orders-status.util";
 
 @Component({
   selector: 'app-orders',

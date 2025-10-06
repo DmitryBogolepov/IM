@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map, Observable, pipe} from "rxjs";
+import {map, Observable} from "rxjs";
 import {CategoryType} from "../../../types/category.type";
 import {environment} from "../../../environments/environment";
 import {CategoryTypeType} from "../../../types/categorytype.type";

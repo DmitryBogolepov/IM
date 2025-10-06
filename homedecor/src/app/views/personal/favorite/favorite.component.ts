@@ -5,7 +5,6 @@ import {DefaultResponseType} from "../../../../types/default-response.type";
 import {environment} from "../../../../environments/environment";
 import {CartType} from "../../../../types/cart.type";
 import {CartService} from "../../../shared/services/cart.service";
-import {ProductService} from "../../../shared/services/product.service";
 
 @Component({
   selector: 'app-favorite',
@@ -15,7 +14,7 @@ import {ProductService} from "../../../shared/services/product.service";
 export class FavoriteComponent implements OnInit {
   products:FavoriteType[] =[];
   serverStaticPath = environment.serverStaticPath;
-  count:number = 1;
+  count = 1;
   cart: CartType | null = null;
   @Input() countInCart:number | undefined = 0;
 
